@@ -1,0 +1,51 @@
+# This is a general manifest template for running DuckDB.
+# Don't use this manifest in production
+
+loader.entrypoint = "file:{{ gramine.libos }}"
+libos.entrypoint = "{{ execdir }}/duckdb/build/release/duckdb"
+
+loader.log_level = "{{ log_level }}"
+# loader.log_level = "trace"
+
+loader.insecure__use_cmdline_argv = true
+
+loader.env.LD_LIBRARY_PATH = "/lib:{{ arch_libdir }}"
+loader.env.PATH = "{{ execdir }}"
+# Set HOME to suppress "warning: cannot find home directory"
+loader.env.HOME = "/"
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
+  { path = "{{ execdir }}/duckdb/build/release/duckdb", uri = "file:{{ execdir }}/duckdb/build/release/duckdb" },
+  { path = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner", uri = "file:{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner" },
+{ path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
+]
+
+# Unfortunately, non-SGX Gramine cannot use special keys such as "_sgx_mrenclave", so for this
+# example to work on both non-SGX and SGX versions we hardcode a dummy key. In SGX production case,
+# it is recommended to remove this insecure key and instead use "_sgx_mrenclave"/"_sgx_mrsigner".
+fs.insecure__keys.default = "ffeeddccbbaa99887766554433221100"
+
+sgx.debug = true
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+sgx.enclave_size = "8G"
+sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '8' }}
+# sgx.enable_stats = true
+sgx.preheat_enclave = true
+sgx.profile.mode = "ocall_outer"
+sgx.profile.with_stack = 1
+
+sgx.trusted_files = [
+  "file:{{ gramine.libos }}",
+  "file:{{ execdir }}/duckdb/build/release/duckdb",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:{{ arch_libdir }}/",
+  "file:{{ execdir }}/scripts/",
+  "file:{{ execdir }}/benchmark/",
+  "file:{{ execdir }}/build/release/src/libduckdb.so",
+]
+
+sgx.allowed_files = [
+  "file:{{ execdir }}/benchmark/",
+]
