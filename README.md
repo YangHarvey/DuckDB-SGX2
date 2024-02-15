@@ -19,6 +19,7 @@ Then build the code:
 ```shell
 cd duckdb
 make all
+make benchmark
 cd ..
 ```
 
@@ -39,12 +40,14 @@ To run DuckDB with Gramine without SGX:
 
 ```shell
 gramine-direct duckdb < scripts/test.sql
+# should return a table with 42, 84
 ```
 
 To run DuckDB with Gramine with SGX:
 
 ```shell
 gramine-sgx duckdb < scripts/test.sql
+# should return a table with 42, 84
 ```
 
 To run benchmarks with the benchmark runner inside an enclave:
