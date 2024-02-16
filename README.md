@@ -19,7 +19,7 @@ Then build the code:
 ```shell
 cd duckdb
 make all
-make benchmark
+make benchmark BUILD_TPCH=1
 cd ..
 ```
 
@@ -59,7 +59,7 @@ cd benchmark
 For performance purposes, we advise to generate the data with DuckDB, rather than running the database generation inside Gramine.
 
 ```shell
-../duckdb/build/release/benchmark_runner "benchmark/tpch/sf1/.*"
+../duckdb/build/release/benchmark/benchmark_runner "benchmark/tpch/sf1/.*"
 # copy the db file [todo]
 ```
 
