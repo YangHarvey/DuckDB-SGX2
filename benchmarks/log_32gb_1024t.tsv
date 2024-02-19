@@ -1,0 +1,123 @@
+Gramine is starting. Parsing TOML manifest file, this may take some time...
+-----------------------------------------------------------------------------------------------------------------------
+Gramine detected the following insecure configurations:
+
+  - sgx.debug = true                           (this is a debug enclave)
+  - loader.insecure__use_cmdline_argv = true   (forwarding command-line args from untrusted host to the app)
+  - sgx.allowed_files = [ ... ]                (some files are passed through from untrusted host without verification)
+  - fs.insecure__keys.* = "..."                (keys hardcoded in manifest)
+
+Gramine will continue application execution, but this configuration must not be used in production!
+-----------------------------------------------------------------------------------------------------------------------
+
+name	run	timing
+benchmark/tpch/sf1/q01.benchmark	1	0.034966
+benchmark/tpch/sf1/q01.benchmark	2	0.029875
+benchmark/tpch/sf1/q01.benchmark	3	0.019568
+benchmark/tpch/sf1/q01.benchmark	4	0.015605
+benchmark/tpch/sf1/q01.benchmark	5	0.014417
+benchmark/tpch/sf1/q02.benchmark	1	0.074434
+benchmark/tpch/sf1/q02.benchmark	2	0.052199
+benchmark/tpch/sf1/q02.benchmark	3	0.046616
+benchmark/tpch/sf1/q02.benchmark	4	0.038805
+benchmark/tpch/sf1/q02.benchmark	5	0.035198
+benchmark/tpch/sf1/q03.benchmark	1	0.037699
+benchmark/tpch/sf1/q03.benchmark	2	0.028827
+benchmark/tpch/sf1/q03.benchmark	3	0.027997
+benchmark/tpch/sf1/q03.benchmark	4	0.027455
+benchmark/tpch/sf1/q03.benchmark	5	0.027041
+benchmark/tpch/sf1/q04.benchmark	1	0.040572
+benchmark/tpch/sf1/q04.benchmark	2	0.032822
+benchmark/tpch/sf1/q04.benchmark	3	0.029288
+benchmark/tpch/sf1/q04.benchmark	4	0.031909
+benchmark/tpch/sf1/q04.benchmark	5	0.032219
+benchmark/tpch/sf1/q05.benchmark	1	0.039030
+benchmark/tpch/sf1/q05.benchmark	2	0.029732
+benchmark/tpch/sf1/q05.benchmark	3	0.027561
+benchmark/tpch/sf1/q05.benchmark	4	0.025508
+benchmark/tpch/sf1/q05.benchmark	5	0.026870
+benchmark/tpch/sf1/q06.benchmark	1	0.015038
+benchmark/tpch/sf1/q06.benchmark	2	0.009101
+benchmark/tpch/sf1/q06.benchmark	3	0.006057
+benchmark/tpch/sf1/q06.benchmark	4	0.006990
+benchmark/tpch/sf1/q06.benchmark	5	0.006800
+benchmark/tpch/sf1/q07.benchmark	1	0.144797
+benchmark/tpch/sf1/q07.benchmark	2	0.103600
+benchmark/tpch/sf1/q07.benchmark	3	0.087839
+benchmark/tpch/sf1/q07.benchmark	4	0.079878
+benchmark/tpch/sf1/q07.benchmark	5	0.083653
+benchmark/tpch/sf1/q08.benchmark	1	0.041487
+benchmark/tpch/sf1/q08.benchmark	2	0.038320
+benchmark/tpch/sf1/q08.benchmark	3	0.039627
+benchmark/tpch/sf1/q08.benchmark	4	0.038277
+benchmark/tpch/sf1/q08.benchmark	5	0.035580
+benchmark/tpch/sf1/q09.benchmark	1	0.098918
+benchmark/tpch/sf1/q09.benchmark	2	0.078940
+benchmark/tpch/sf1/q09.benchmark	3	0.076599
+benchmark/tpch/sf1/q09.benchmark	4	0.075954
+benchmark/tpch/sf1/q09.benchmark	5	0.067796
+benchmark/tpch/sf1/q10.benchmark	1	0.237156
+benchmark/tpch/sf1/q10.benchmark	2	0.175471
+benchmark/tpch/sf1/q10.benchmark	3	0.171431
+benchmark/tpch/sf1/q10.benchmark	4	0.168880
+benchmark/tpch/sf1/q10.benchmark	5	0.159667
+benchmark/tpch/sf1/q11.benchmark	1	0.049267
+benchmark/tpch/sf1/q11.benchmark	2	0.026523
+benchmark/tpch/sf1/q11.benchmark	3	0.025849
+benchmark/tpch/sf1/q11.benchmark	4	0.015680
+benchmark/tpch/sf1/q11.benchmark	5	0.014576
+benchmark/tpch/sf1/q12.benchmark	1	0.037730
+benchmark/tpch/sf1/q12.benchmark	2	0.035920
+benchmark/tpch/sf1/q12.benchmark	3	0.029089
+benchmark/tpch/sf1/q12.benchmark	4	0.029382
+benchmark/tpch/sf1/q12.benchmark	5	0.028451
+benchmark/tpch/sf1/q13.benchmark	1	0.118235
+benchmark/tpch/sf1/q13.benchmark	2	0.077084
+benchmark/tpch/sf1/q13.benchmark	3	0.091257
+benchmark/tpch/sf1/q13.benchmark	4	0.081956
+benchmark/tpch/sf1/q13.benchmark	5	0.077440
+benchmark/tpch/sf1/q14.benchmark	1	0.039108
+benchmark/tpch/sf1/q14.benchmark	2	0.035552
+benchmark/tpch/sf1/q14.benchmark	3	0.038807
+benchmark/tpch/sf1/q14.benchmark	4	0.032516
+benchmark/tpch/sf1/q14.benchmark	5	0.028553
+benchmark/tpch/sf1/q15.benchmark	1	0.038637
+benchmark/tpch/sf1/q15.benchmark	2	0.026503
+benchmark/tpch/sf1/q15.benchmark	3	0.023843
+benchmark/tpch/sf1/q15.benchmark	4	0.023808
+benchmark/tpch/sf1/q15.benchmark	5	0.023516
+benchmark/tpch/sf1/q16.benchmark	1	0.065825
+benchmark/tpch/sf1/q16.benchmark	2	0.046689
+benchmark/tpch/sf1/q16.benchmark	3	0.038162
+benchmark/tpch/sf1/q16.benchmark	4	0.039140
+benchmark/tpch/sf1/q16.benchmark	5	0.034651
+benchmark/tpch/sf1/q17.benchmark	1	0.032466
+benchmark/tpch/sf1/q17.benchmark	2	0.026298
+benchmark/tpch/sf1/q17.benchmark	3	0.025164
+benchmark/tpch/sf1/q17.benchmark	4	0.024347
+benchmark/tpch/sf1/q17.benchmark	5	0.024185
+benchmark/tpch/sf1/q18.benchmark	1	0.093969
+benchmark/tpch/sf1/q18.benchmark	2	0.093195
+benchmark/tpch/sf1/q18.benchmark	3	0.086969
+benchmark/tpch/sf1/q18.benchmark	4	0.079608
+benchmark/tpch/sf1/q18.benchmark	5	0.073660
+benchmark/tpch/sf1/q19.benchmark	1	0.159010
+benchmark/tpch/sf1/q19.benchmark	2	0.129729
+benchmark/tpch/sf1/q19.benchmark	3	0.151330
+benchmark/tpch/sf1/q19.benchmark	4	0.084330
+benchmark/tpch/sf1/q19.benchmark	5	0.093706
+benchmark/tpch/sf1/q20.benchmark	1	0.061159
+benchmark/tpch/sf1/q20.benchmark	2	0.036869
+benchmark/tpch/sf1/q20.benchmark	3	0.033956
+benchmark/tpch/sf1/q20.benchmark	4	0.035664
+benchmark/tpch/sf1/q20.benchmark	5	0.037693
+benchmark/tpch/sf1/q21.benchmark	1	0.109832
+benchmark/tpch/sf1/q21.benchmark	2	0.099293
+benchmark/tpch/sf1/q21.benchmark	3	0.094600
+benchmark/tpch/sf1/q21.benchmark	4	0.081281
+benchmark/tpch/sf1/q21.benchmark	5	0.082972
+benchmark/tpch/sf1/q22.benchmark	1	0.111096
+benchmark/tpch/sf1/q22.benchmark	2	0.089047
+benchmark/tpch/sf1/q22.benchmark	3	0.078463
+benchmark/tpch/sf1/q22.benchmark	4	0.073057
+benchmark/tpch/sf1/q22.benchmark	5	0.063698
