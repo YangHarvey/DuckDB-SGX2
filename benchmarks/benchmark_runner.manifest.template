@@ -4,8 +4,8 @@
 loader.entrypoint = "file:{{ gramine.libos }}"
 libos.entrypoint = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner"
 
-# loader.log_level = "{{ log_level }}"
-loader.log_level = "trace"
+loader.log_level = "{{ log_level }}"
+#loader.log_level = "trace"
 
 loader.insecure__use_cmdline_argv = true
 
@@ -21,7 +21,7 @@ fs.mounts = [
   { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
   { path = "{{ execdir }}/duckdb/build/release/duckdb", uri = "file:{{ execdir }}/duckdb/build/release/duckdb" },
   { path = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner", uri = "file:{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner" },
-{ path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
+  { path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
   { path = "{{ execdir }}/duckdb/extension/tpch/", uri = "file:{{ execdir }}/duckdb/extension/tpch/" },
 ]
 
@@ -32,8 +32,8 @@ fs.insecure__keys.default = "ffeeddccbbaa99887766554433221100"
 
 sgx.debug = true
 sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
-sgx.enclave_size = "16G"
-sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '8' }}
+sgx.enclave_size = "8G"
+sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '128' }}
 sgx.preheat_enclave = true
 # sgx.enable_stats = true
 
@@ -44,17 +44,16 @@ sgx.trusted_files = [
   "file:{{ execdir }}/duckdb/build/release/duckdb",
   "file:{{ gramine.runtimedir() }}/",
   "file:{{ arch_libdir }}/",
-  "file:scripts/",
-  "file:{{ execdir }}/benchmark/",
   "file:{{ execdir }}/duckdb/build/release/benchmark/",
   "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so",
-  "file:{{ execdir }}/duckdb/extension/tpch/"
+  "file:{{ execdir }}/duckdb/extension/tpch/",
+  "file:{{ execdir }}/duckdb/benchmark/tpch/"
 ]
 
 # Gramine supports read and write operations on files. Appending to files is currently unsupported. Writing to trusted files is prohibited.
 
 sgx.allowed_files = [
   "file:{{ execdir }}/duckdb/build/release/benchmark/",
-  "file:{{ execdir }}/benchmark/",
+  "file:{{ execdir }}/benchmarks/",
   "file:{{ execdir }}/duckdb/duckdb_benchmark_data/",
 ]

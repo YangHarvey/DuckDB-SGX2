@@ -61,7 +61,6 @@ For performance purposes, we advise to generate the data with DuckDB, rather tha
 
 ```shell
 ../duckdb/build/release/benchmark/benchmark_runner "benchmark/tpch/sf1/.*"
-# copy the db file [todo]
 ```
 
 Edit the manifest as needed.

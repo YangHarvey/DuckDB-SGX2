@@ -15,7 +15,7 @@ endif
 benchmark_runner.manifest: benchmark_runner.manifest.template
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
-		-Dexecdir="duckdb" \
+		-Dexecdir=$(dir $(shell pwd)) \
 		-Darch_libdir=$(ARCH_LIBDIR) \
 		$< >$@
 
