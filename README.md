@@ -7,23 +7,24 @@ Prerequisites:
 * Ubuntu 22.04
 * SGX drivers installed (see [here](https://github.com/intel/linux-sgx))
 * Gramine (see [here](https://gramine.readthedocs.io/en/latest/installation.html))
+* CMake
 
-DuckDB is embedded in this repository as a submodule. To install it, start by pulling the submodule:
+DuckDB is embedded in this repository as a submodule. To install it, start by pulling the submodule after cloning:
 
 ```shell
+cd DuckDB-SGX/
 git submodule update --init
 ```
 
-Then build the code:
+Then build the code with the necessary extensions:
 
 ```shell
-cd duckdb
-make all
-make benchmark BUILD_TPCH=1
+cd duckdb/
+make all benchmark BUILD_TPCH=1
 cd ..
 ```
 
-Now generate the manifest files. In this example, we include two manifest files - one for the DuckDB engine and one fore the benchmark runner. We start by building the former.
+Now, generate the manifest files. In this example, we include two manifest files - one for the DuckDB engine and one fore the benchmark runner. We start by building the former.
 
 If needed, edit the manifest file. We advise to edit `loader.log_level` if a higher log granularity is desired, and `sgx.enclave_size` to adjust the allocated memory (must be a power of two). 
 
