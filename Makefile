@@ -15,7 +15,7 @@ endif
 duckdb.manifest: duckdb.manifest.template
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
-		-Dexecdir="duckdb" \
+		-Dexecdir=$(shell pwd) \
 		-Darch_libdir=$(ARCH_LIBDIR) \
 		$< >$@
 

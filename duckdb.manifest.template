@@ -19,7 +19,7 @@ fs.mounts = [
   { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
   { path = "{{ execdir }}/duckdb/build/release/duckdb", uri = "file:{{ execdir }}/duckdb/build/release/duckdb" },
   { path = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner", uri = "file:{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner" },
-{ path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
+  # { path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
 ]
 
 # Unfortunately, non-SGX Gramine cannot use special keys such as "_sgx_mrenclave", so for this
@@ -30,7 +30,7 @@ fs.insecure__keys.default = "ffeeddccbbaa99887766554433221100"
 sgx.debug = true
 sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
 sgx.enclave_size = "8G"
-sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '8' }}
+sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '16' }}
 # sgx.enable_stats = true
 sgx.preheat_enclave = true
 sgx.profile.mode = "ocall_outer"
@@ -42,10 +42,9 @@ sgx.trusted_files = [
   "file:{{ gramine.runtimedir() }}/",
   "file:{{ arch_libdir }}/",
   "file:{{ execdir }}/scripts/",
-  "file:{{ execdir }}/benchmark/",
-  "file:{{ execdir }}/build/release/src/libduckdb.so",
+  # "file:{{ execdir }}/build/release/src/libduckdb.so",
 ]
 
 sgx.allowed_files = [
-  "file:{{ execdir }}/benchmark/",
+  "file:{{ execdir }}/benchmarks/",
 ]
