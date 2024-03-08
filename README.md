@@ -81,8 +81,8 @@ To run the benchmark runner with Gramine with SGX:
 ```shell
 gramine-sgx benchmark_runner "benchmark/tpch/sf1/.*"
 ```
-
-#### Running different scale factors
+<br/><br/>
+### Running different scale factors
 By default, the benchmark runner generates data with SF1. In order to benchmark different scale factors, do the following:
 ```shell
 cd duckdb
