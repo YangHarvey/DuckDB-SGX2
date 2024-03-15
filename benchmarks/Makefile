@@ -7,23 +7,27 @@ GRAMINE_LOG_LEVEL = error
 endif
 
 .PHONY: all
-all: benchmark_runner.manifest
+all: benchmark.manifest
 ifeq ($(SGX),1)
-all: benchmark_runner.manifest.sgx benchmark_runner.sig
+all: benchmark.manifest.sgx benchmark.sig
 endif
 
-benchmark_runner.manifest: benchmark_runner.manifest.template
+benchmark.manifest: benchmark.manifest.template
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
-		-Dexecdir=$(dir $(shell pwd)) \
 		-Darch_libdir=$(ARCH_LIBDIR) \
-		$< >$@
+		-Dexecdir=$(shell pwd) \
+		-Dentrypoint=$(realpath $(shell sh -c "command -v python3")) \
+		$< > $@
 
-benchmark_runner.manifest.sgx benchmark_runner.sig: sgx_sign
+# Make on Ubuntu <= 20.04 doesn't support "Rules with Grouped Targets" (`&:`),
+# for details on this workaround see
+# https://github.com/gramineproject/gramine/blob/e8735ea06c/CI-Examples/helloworld/Makefile
+benchmark.manifest.sgx benchmark.sig: sgx_sign
 	@:
 
 .INTERMEDIATE: sgx_sign
-sgx_sign: benchmark_runner.manifest
+sgx_sign: benchmark.manifest
 	gramine-sgx-sign \
 		--manifest $< \
 		--output $<.sgx
@@ -34,17 +38,10 @@ else
 GRAMINE = gramine-sgx
 endif
 
-# Note that command-line arguments are hardcoded in the manifest file.
-.PHONY: regression
-regression: all
-	@$(RM) db/*
-
-	$(GRAMINE) benchmark_runner benchmark/micro/nulls/no_nulls_addition.benchmark --out=timings.out
-	@echo "[ Success 1/1 ]"
-
 .PHONY: clean
 clean:
-	$(RM) *.manifest *.manifest.sgx *.token *.sig OUTPUT db/*
+	$(RM) *.token *.sig *.manifest.sgx *.manifest
 
 .PHONY: distclean
 distclean: clean
+	$(RM) *.pt result.txt
