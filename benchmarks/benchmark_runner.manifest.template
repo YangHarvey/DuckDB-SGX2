@@ -4,8 +4,8 @@
 loader.entrypoint = "file:{{ gramine.libos }}"
 libos.entrypoint = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner"
 
-#loader.log_level = "{{ log_level }}"
-loader.log_level = "trace"
+loader.log_level = "{{ log_level }}"
+#loader.log_level = "trace"
 
 loader.insecure__use_cmdline_argv = true
 
