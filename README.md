@@ -1,6 +1,9 @@
 ## DuckDB on Intel SGX 2
 
-This repository contains the code necessary to run DuckDB on a CPU supporting Intel SGX. This is a **research prototype**, and we do not advise to run DuckDB-SGX in production. 
+This repository contains the code necessary to run DuckDB on a CPU supporting Intel SGX. This is a **research prototype**, and we do not advise to run DuckDB-SGX in production. We offer multiple manifest files:
+* One to run DuckDB as a CLI tool.
+* One to run the benchmarking suite.
+* One to run the benchmarking suite using the OpenSSL AES-GCM implementation (https://github.com/ccfelius/duckdb/tree/openssl).
 
 Prerequisites:
 
@@ -23,6 +26,7 @@ cd duckdb/
 make all benchmark BUILD_TPCH=1
 cd ..
 ```
+For the OpenSSL version, do the same in the `duckdb_openssl` folder.
 
 Now, generate the manifest files. In this example, we include two manifest files - one for the DuckDB engine and one fore the benchmark runner. We start by building the former.
 
