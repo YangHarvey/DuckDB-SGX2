@@ -2,10 +2,10 @@
 # Don't use this manifest in production
 
 loader.entrypoint = "file:{{ gramine.libos }}"
-libos.entrypoint = "/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner"
+libos.entrypoint = "{{ execdir }}/duckdb_openssl/build/release/benchmark/benchmark_runner"
 
 loader.log_level = "{{ log_level }}"
-#loader.log_level = "debug"
+#loader.log_level = "trace"
 
 loader.insecure__use_cmdline_argv = true
 
@@ -16,14 +16,13 @@ loader.env.HOME = ""
 
 fs.mounts = [
   { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
-  { path = "/home/sdp/duckdb_openssl/duckdb_benchmark_data/", uri = "file:/home/sdp/duckdb_openssl/duckdb_benchmark_data/" },
-  { path = "/home/sdp/duckdb_openssl/benchmark/tpch/", uri = "file:/home/sdp/duckdb_openssl/benchmark/tpch/" },
+  { path = "{{ execdir }}/duckdb_openssl/duckdb_benchmark_data/", uri = "file:{{ execdir }}/duckdb_openssl/duckdb_benchmark_data/" },
+  { path = "{{ execdir }}/duckdb_openssl/benchmark/tpch/", uri = "file:{{ execdir }}/duckdb_openssl/benchmark/tpch/" },
   { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
-  { path = "{{ execdir }}", uri = "file:{{ execdir }}" },
-  { path = "/home/sdp/duckdb_openssl/build/release/duckdb", uri = "file:/home/sdp/duckdb_openssl/build/release/duckdb" },
-  { path = "/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner", uri = "file:/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner" },
-  { path = "/home/sdp/duckdb_openssl/build/release/src/libduckdb.so", uri = "file:/home/sdp/duckdb_openssl/build/release/src/libduckdb.so" },
-  { path = "/home/sdp/duckdb_openssl/", uri = "file:/home/sdp/duckdb_openssl/" },
+  { path = "{{ execdir }}/duckdb_openssl/build/release/duckdb", uri = "file:{{ execdir }}/duckdb_openssl/build/release/duckdb" },
+  { path = "{{ execdir }}/duckdb_openssl/build/release/benchmark/benchmark_runner", uri = "file:{{ execdir }}/duckdb_openssl/build/release/benchmark/benchmark_runner" },
+  { path = "{{ execdir }}/duckdb_openssl/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb_openssl/build/release/src/libduckdb.so" },
+  { path = "{{ execdir }}/duckdb_openssl/extension/tpch/", uri = "file:{{ execdir }}/duckdb_openssl/extension/tpch/" },
 ]
 
 # Unfortunately, non-SGX Gramine cannot use special keys such as "_sgx_mrenclave", so for this
@@ -37,25 +36,24 @@ sgx.enclave_size = "64G"
 sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '256' }}
 sgx.preheat_enclave = true
 #sgx.enable_stats = true
-#sgx.cpu_features.avx512 = "required"
 
 sys.stack.size = "8M"
 
 sgx.trusted_files = [
   "file:{{ gramine.libos }}",
-  "file:/home/sdp/duckdb_openssl/build/release/duckdb",
+  "file:{{ execdir }}/duckdb_openssl/build/release/duckdb",
   "file:{{ gramine.runtimedir() }}/",
   "file:{{ arch_libdir }}/",
-  "file:/home/sdp/duckdb_openssl/build/release/benchmark/",
-  "file:/home/sdp/duckdb_openssl/build/release/src/libduckdb.so",
-  "file:/home/sdp/duckdb_openssl/benchmark/tpch/",
-  "file:/home/sdp/duckdb_openssl/extension/tpch/"
+  "file:{{ execdir }}/duckdb_openssl/build/release/benchmark/",
+  "file:{{ execdir }}/duckdb_openssl/build/release/src/libduckdb.so",
+  "file:{{ execdir }}/duckdb_openssl/extension/tpch/",
+  "file:{{ execdir }}/duckdb_openssl/benchmark/tpch/"
 ]
 
 # Gramine supports read and write operations on files. Appending to files is currently unsupported. Writing to trusted files is prohibited.
 
 sgx.allowed_files = [
-  "file:/home/sdp/duckdb_openssl/build/release/benchmark/",
-  "file:/home/sdp/duckdb_openssl//benchmarks/",
-  "file:/home/sdp/duckdb_openssl/duckdb_benchmark_data/",
+  "file:{{ execdir }}/duckdb_openssl/build/release/benchmark/",
+  "file:{{ execdir }}/benchmarks/",
+  "file:{{ execdir }}/duckdb_openssl/duckdb_benchmark_data/",
 ]
