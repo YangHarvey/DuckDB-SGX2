@@ -7,23 +7,23 @@ GRAMINE_LOG_LEVEL = error
 endif
 
 .PHONY: all
-all: duckdb.manifest
+all: benchmark_runner.manifest
 ifeq ($(SGX),1)
-all: duckdb.manifest.sgx duckdb.sig
+all: benchmark_runner.manifest.sgx benchmark_runner.sig
 endif
 
-duckdb.manifest: duckdb.manifest.template
+benchmark_runner.manifest: benchmark_runner.manifest.template
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
-		-Dexecdir=$(shell pwd) \
+		-Dexecdir=$(dir $(shell pwd)) \
 		-Darch_libdir=$(ARCH_LIBDIR) \
 		$< >$@
 
-duckdb.manifest.sgx duckdb.sig: sgx_sign
+benchmark_runner.manifest.sgx benchmark_runner.sig: sgx_sign
 	@:
 
 .INTERMEDIATE: sgx_sign
-sgx_sign: duckdb.manifest
+sgx_sign: benchmark_runner.manifest
 	gramine-sgx-sign \
 		--manifest $< \
 		--output $<.sgx
@@ -39,7 +39,7 @@ endif
 regression: all
 	@$(RM) db/*
 
-	$(GRAMINE) duckdb < scripts/test.sql
+	$(GRAMINE) benchmark_runner benchmark/micro/nulls/no_nulls_addition.benchmark --out=timings.out
 	@echo "[ Success 1/1 ]"
 
 .PHONY: clean

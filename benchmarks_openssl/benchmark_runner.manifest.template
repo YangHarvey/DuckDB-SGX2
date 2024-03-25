@@ -1,0 +1,61 @@
+# This is a general manifest template for running DuckDB.
+# Don't use this manifest in production
+
+loader.entrypoint = "file:{{ gramine.libos }}"
+libos.entrypoint = "/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner"
+
+loader.log_level = "{{ log_level }}"
+#loader.log_level = "debug"
+
+loader.insecure__use_cmdline_argv = true
+
+loader.env.LD_LIBRARY_PATH = "/lib:{{ arch_libdir }}"
+loader.env.PATH = "{{ execdir }}"
+# Set HOME to suppress "warning: cannot find home directory"
+loader.env.HOME = ""
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "/home/sdp/duckdb_openssl/duckdb_benchmark_data/", uri = "file:/home/sdp/duckdb_openssl/duckdb_benchmark_data/" },
+  { path = "/home/sdp/duckdb_openssl/benchmark/tpch/", uri = "file:/home/sdp/duckdb_openssl/benchmark/tpch/" },
+  { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
+  { path = "{{ execdir }}", uri = "file:{{ execdir }}" },
+  { path = "/home/sdp/duckdb_openssl/build/release/duckdb", uri = "file:/home/sdp/duckdb_openssl/build/release/duckdb" },
+  { path = "/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner", uri = "file:/home/sdp/duckdb_openssl/build/release/benchmark/benchmark_runner" },
+  { path = "/home/sdp/duckdb_openssl/build/release/src/libduckdb.so", uri = "file:/home/sdp/duckdb_openssl/build/release/src/libduckdb.so" },
+  { path = "/home/sdp/duckdb_openssl/", uri = "file:/home/sdp/duckdb_openssl/" },
+]
+
+# Unfortunately, non-SGX Gramine cannot use special keys such as "_sgx_mrenclave", so for this
+# example to work on both non-SGX and SGX versions we hardcode a dummy key. In SGX production case,
+# it is recommended to remove this insecure key and instead use "_sgx_mrenclave"/"_sgx_mrsigner".
+fs.insecure__keys.default = "ffeeddccbbaa99887766554433221100"
+
+sgx.debug = true
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+sgx.enclave_size = "64G"
+sgx.max_threads = {{ '1' if env.get('EDMM', '0') == '1' else '256' }}
+sgx.preheat_enclave = true
+#sgx.enable_stats = true
+#sgx.cpu_features.avx512 = "required"
+
+sys.stack.size = "8M"
+
+sgx.trusted_files = [
+  "file:{{ gramine.libos }}",
+  "file:/home/sdp/duckdb_openssl/build/release/duckdb",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:{{ arch_libdir }}/",
+  "file:/home/sdp/duckdb_openssl/build/release/benchmark/",
+  "file:/home/sdp/duckdb_openssl/build/release/src/libduckdb.so",
+  "file:/home/sdp/duckdb_openssl/benchmark/tpch/",
+  "file:/home/sdp/duckdb_openssl/extension/tpch/"
+]
+
+# Gramine supports read and write operations on files. Appending to files is currently unsupported. Writing to trusted files is prohibited.
+
+sgx.allowed_files = [
+  "file:/home/sdp/duckdb_openssl/build/release/benchmark/",
+  "file:/home/sdp/duckdb_openssl//benchmarks/",
+  "file:/home/sdp/duckdb_openssl/duckdb_benchmark_data/",
+]

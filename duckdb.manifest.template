@@ -4,8 +4,8 @@
 loader.entrypoint = "file:{{ gramine.libos }}"
 libos.entrypoint = "{{ execdir }}/duckdb/build/release/duckdb"
 
-loader.log_level = "{{ log_level }}"
-# loader.log_level = "trace"
+#loader.log_level = "{{ log_level }}"
+loader.log_level = "error"
 
 loader.insecure__use_cmdline_argv = true
 
@@ -14,12 +14,14 @@ loader.env.PATH = "{{ execdir }}"
 # Set HOME to suppress "warning: cannot find home directory"
 loader.env.HOME = "/"
 # loader.env.MALLOC_ARENA_MAX = "1"
+sys.insecure__allow_eventfd = true
 
 fs.mounts = [
   { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
   { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
-  { path = "{{ execdir }}/duckdb/build/release/duckdb", uri = "file:{{ execdir }}/duckdb/build/release/duckdb" },
-  { path = "{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner", uri = "file:{{ execdir }}/duckdb/build/release/benchmark/benchmark_runner" },
+  #{ path = "{{ execdir }}/duckdb/build/release/duckdb", uri = "file:{{ execdir }}/duckdb/build/release/duckdb" },
+  { path = "{{ execdir }}", uri = "file:{{ execdir }}" },
+  #{ path = "{{ execdir }}/benchmarks", uri = "file:{{ execdir }}/benchmarks" },
   # { path = "{{ execdir }}/duckdb/build/release/src/libduckdb.so", uri = "file:{{ execdir }}/duckdb/build/release/src/libduckdb.so" },
 ]
 
@@ -28,10 +30,12 @@ fs.mounts = [
 # it is recommended to remove this insecure key and instead use "_sgx_mrenclave"/"_sgx_mrsigner".
 fs.insecure__keys.default = "ffeeddccbbaa99887766554433221100"
 
-sgx.debug = true
+#sgx.debug = true
 sgx.edmm_enable = false
-sgx.enclave_size = "8G"
-sgx.max_threads = 128
+sgx.enclave_size = "2G"
+sgx.max_threads = 1000
+sgx.use_exinfo = true
+sgx.insecure__allow_memfaults_without_exinfo = true
 # sgx.enable_stats = true
 sgx.preheat_enclave = true
 # sgx.profile.mode = "ocall_outer"
@@ -43,10 +47,12 @@ sgx.trusted_files = [
   "file:{{ execdir }}/duckdb/build/release/duckdb",
   "file:{{ gramine.runtimedir() }}/",
   "file:{{ arch_libdir }}/",
-  "file:{{ execdir }}/scripts/",
+  "file:{{ execdir }}/scripts/test.sql",
   # "file:{{ execdir }}/build/release/src/libduckdb.so",
 ]
 
 sgx.allowed_files = [
-  "file:{{ execdir }}/benchmarks/",
+  "file:benchmarks/orders.parquet",
+  "file:test.duckdb",
+  "file:test.duckdb.wal",
 ]
