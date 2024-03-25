@@ -1,0 +1,23 @@
+# name: ${FILE_PATH}
+# description: ${DESCRIPTION}
+# group: [sf30]
+
+name Q${QUERY_NUMBER_PADDED}
+group tpch
+subgroup sf30
+
+require tpch
+
+load
+SET memory_limit = '40GB';
+SET threads to 56;
+CREATE OR REPLACE VIEW part AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/part.parquet');
+CREATE OR REPLACE VIEW supplier AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/supplier.parquet');
+CREATE OR REPLACE VIEW partsupp AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/partsupp.parquet');
+CREATE OR REPLACE VIEW customer AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/customer.parquet');
+CREATE OR REPLACE VIEW orders AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/orders.parquet');
+CREATE OR REPLACE VIEW lineitem AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/lineitem.parquet');
+CREATE OR REPLACE VIEW nation AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/nation.parquet');
+CREATE OR REPLACE VIEW region AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/uncompressed_unencrypted/region.parquet');
+
+run extension/tpch/dbgen/queries/q${QUERY_NUMBER_PADDED}.sql

@@ -1,0 +1,24 @@
+# name: ${FILE_PATH}
+# description: ${DESCRIPTION}
+# group: [sf30]
+
+name Q${QUERY_NUMBER_PADDED}
+group tpch
+subgroup sf30
+
+require tpch
+
+load
+PRAGMA add_parquet_key('key128', '0123456789112345');
+SET memory_limit = '40GB';
+SET threads to 56;
+CREATE OR REPLACE VIEW part AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/part.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW supplier AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/supplier.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW partsupp AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/partsupp.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW customer AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/customer.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW orders AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/orders.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW lineitem AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/lineitem.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW nation AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/nation.parquet', encryption_config={footer_key: 'key128'});
+CREATE OR REPLACE VIEW region AS SELECT * FROM read_parquet('${BENCHMARK_DIR}/sf30/compressed_encrypted/region.parquet', encryption_config={footer_key: 'key128'});
+
+run extension/tpch/dbgen/queries/q${QUERY_NUMBER_PADDED}.sql

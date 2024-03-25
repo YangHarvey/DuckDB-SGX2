@@ -1,0 +1,7 @@
+# name: benchmark/tpch/sf30_uu/q02.benchmark
+# description: Run query 02 from the TPC-H benchmark (single-threaded)
+# group: [sf30]
+
+template benchmark/tpch/sf30_uu/tpch_sf30.benchmark.in
+QUERY_NUMBER=2
+QUERY_NUMBER_PADDED=02
