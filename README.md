@@ -26,6 +26,7 @@ cd duckdb/
 make all benchmark BUILD_TPCH=1
 cd ..
 ```
+For the OpenSSL version, do the same in the `duckdb_openssl` folder.
 
 Now, generate the manifest files. In this example, we include two manifest files - one for the DuckDB engine and one fore the benchmark runner. We start by building the former.
 
