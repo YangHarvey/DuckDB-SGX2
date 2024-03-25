@@ -103,6 +103,7 @@ Here we show how to reproduce the TPC-H benchmark on Parquet, assuming scale fac
 * Compressed, unencrypted (CU)
 * Uncompressed, encrypted (UE)
 * Compressed, encrypted (CE)
+
 First of all create a database file calling `dbgen` as above. Then, we need to store the data in four folders inside `${BENCHMARK_DIR}`, which in our case is `duckdb/duckdb_benchmark_data`.
 ```
 mkdir duckdb/duckdb_benchmark_data/sf30
