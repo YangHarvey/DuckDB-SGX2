@@ -1,0 +1,86 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) sfp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/duckdb_sgx/examples/select_from_parquet/build/sfp",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/duckdb_sgx/tpch_benchmark_data/sf1-parquet",
+            "environment": [
+                {
+                    "name": "LD_PRELOAD",
+                    "value": "/usr/lib/gcc/x86_64-linux-gnu/11/libasan.so"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) duckdb_sgx",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/duckdb_sgx/build/debug/duckdb",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/duckdb_sgx",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) duckdb_sgx_benchrunner",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/duckdb_sgx/build/debug/duckdb",
+            "args": ["${workspaceFolder}/duckdb_sgx/duckdb_benchmark_data/tpch_sf1_parquet.duckdb"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+
+    ]
+}
